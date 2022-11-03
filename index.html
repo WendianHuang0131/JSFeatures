@@ -4,38 +4,79 @@
         <meta charset = "utf-8">
         <title>JS Test</title>
         <style>
-            body{ margin : 0;}
+            table,td,tr,th{
+                border:1px solid #000;
+                cursor: pointer;;
+            }
+            table{
+                border-collapse: collapse;
+            }
+			.wrapper {
+			  position: relative;
+			}
+
+			.dashed-box {
+			  position: relative;
+			  z-index: 1;
+			  border: dashed;
+			}
+			.gold-box {
+			  position: absolute;
+			  z-index: 3;
+			  left: 5px;
+			}
         </style>
+
+        <script type="text/javascript" src="jquery-3.5.1.js"></script>
     </head>
 
     <body>
-
-        <canvas id = "testCanvas" style = "width:100%;height: 100%;"></canvas>
-
-        <script src = "js/three.js"></script>
+		
+		<div id="loading"></div>
+		
+		<canvas id="canvas1" class = "dashed-box" height = "500" width = "600" style="border: 5px solid green;position: relative;"></canvas>
+        <canvas id="canvas2" class = "gold-box" height = "500" width = "600" style="position: absolute; border: 5px solid green;"></canvas>
+          
+		<p>
+			測試
+		</p>
         <script>
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+		//-----------variables-------------------------------
+		var canvas1;
+		var canvas2;
+		var style1;
+		var style2;
+		var testImage;
+		var testimage2;
 
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize( window.innerWidth, window.innerHeight);
-            
-            var canvas = document.getElementById("testCanvas");
+		loadImage();
+		function loadImage(){
+			testimage2 = new Image(600,900);
+			testimage2.src = "model3.png";
+			testimage2.onload = Initialization2;
 
-            console.log(canvas.height);
-            const geometry = new THREE.BoxGeometry( 1, 1, 1);
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const cube = new THREE.Mesh( geometry, material );
-            cube.rotation.y -= 10;
-            scene.add( cube );
-             
+			testImage = new Image(500,600);
+			testImage.src = "rhino.jpg";
+			testImage.onload = Initialization;
+		}
 
-            camera.position.z = 5;
-            camera.position.y = 5;
-            camera.lookAt(new THREE.Vector3( 0, 0, 0 ));
-            
-            renderer.render( scene, camera );
-            document.body.appendChild( renderer.domElement);
+		function Initialization(){
+			canvas1 = document.getElementById('canvas1');
+			var ctx = canvas1.getContext('2d');
+			ctx.drawImage(testImage, 0, 0,500,600);
+			//canvas1.style = "position:relative; top:170px;border: 5px solid green;z-index: 9999;";
+		}
+
+		function Initialization2(){
+			canvas2 = document.getElementById("canvas2");
+			var ctx2 = canvas2.getContext('2d');
+			ctx2.drawImage(testimage2,0,0,600,900);
+		}
+
         </script>
+
+		<p>
+			testtesttest
+		</p>
     </body>
 </html>
